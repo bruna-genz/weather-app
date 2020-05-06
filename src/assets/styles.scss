@@ -6,7 +6,22 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    
     #location-form {
         display: flex;
+    }
+}
+
+#weather-info {
+    width: 25%;
+    border: solid 1px gray;
+    margin-top: 5em;
+    #main {
+        display: flex;
+        justify-content: space-between;
+        margin: 0 2em;
+        #left {
+            display: flex;
+        }
     }
 }
