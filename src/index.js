@@ -10,6 +10,7 @@ const locationInput = document.querySelector("#location-input")
 const getWeather = async (location) => {
     const result = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${key}`, { mode: 'cors'})
     console.log(result)
+    
 }
 
 // Events
