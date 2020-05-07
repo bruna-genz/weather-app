@@ -27,7 +27,11 @@ const formatTemp = (temp) => {
 }
 
 const formatWindSpeed = (windSpeed) => {
-    return Math.round(windSpeed * 3.6)
+    if (state.unit == "metric") {
+       return `${Math.round(windSpeed * 3.6)} km/h`
+    } else {
+        return `${Math.round(windSpeed)} mph`
+    }
 }
 
 const formatDescription = (des) => {
@@ -35,14 +39,21 @@ const formatDescription = (des) => {
 }
 
 // API calls 
-const getCurrentWeather = async (location, unit) => {
-    const result = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${key}&units=${unit}`, { mode: 'cors'})
-    saveCurrentWeather(await result.json())
-}
+const getWeatherData = async (location, unit) => {
 
-const getForecast = async (location, unit = "metric") => {
-    const result = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=${key}&units=${unit}`, { mode: 'cors'})
-    saveForecast(await result.json())
+    // API call fot the current weather
+    const resultCurrent = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${key}&units=${unit}`, { mode: 'cors'})
+    // API call for next 5 days forecas
+    const resultForecast = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=${key}&units=${unit}`, { mode: 'cors'})
+    
+    if (resultCurrent.status == 200 && resultForecast.status == 200) {
+        saveCurrentWeather(await resultCurrent.json())
+        saveForecast(await resultForecast.json())
+        return true
+    } else {
+        alert("Location not found")
+        return false
+    }
 }
 
 // Sava date into state object
@@ -61,9 +72,9 @@ const saveCurrentWeather = (weatherData) => {
 const saveForecast = (weatherData) => {
     state.forecast = []
     for (let i = 6, day = 1; i < 40; i+=8, day++) {
-        state.forecast.push({ date: formatDate(weatherData.list[i].dt),
-                             icon: weatherData.list[i].weather[0].icon,
-                             temp: formatTemp(weatherData.list[i].main.temp),
+        state.forecast.push({   date: formatDate(weatherData.list[i].dt),
+                                icon: weatherData.list[i].weather[0].icon,
+                                temp: formatTemp(weatherData.list[i].main.temp),
                             })
     }
 }
@@ -92,10 +103,12 @@ const renderForecast = () => {
 // Events
 body.addEventListener("click", async (e) => {
     if (e.target.matches("button")) {
-        const unit = e.target.dataset.unit
-        await getCurrentWeather(locationInput.value, unit)
-        await getForecast(locationInput.value, unit)
-        body.removeChild(body.children[1])
-        renderWeatherInfo()
+        state.unit = e.target.dataset.unit
+        const response = await getWeatherData(locationInput.value, state.unit)
+        
+        if (response) {
+            body.removeChild(body.children[1])
+            renderWeatherInfo()
+        }
     }
 })

@@ -17,7 +17,7 @@ export const weatherInfoView = (weatherData) => {
             </div>
             <div id="right">
                 <p>Fells like: ${weatherData.day0.feel}°</p>
-                <p>Wind: ${weatherData.day0.wind} km/h</p>
+                <p>Wind: ${weatherData.day0.wind}</p>
             </div>
         </div>
         <div id="next-days">
