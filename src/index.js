@@ -31,6 +31,10 @@ const formatWindSpeed = (windSpeed) => {
     return Math.round(windSpeed * 3.6)
 }
 
+const formatDescription = (des) => {
+    return des[0].toUpperCase() + des.slice(1)
+}
+
 // API calls 
 const getCurrentWeather = async (location) => {
     const result = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${key}&units=metric`, { mode: 'cors'})
@@ -44,10 +48,10 @@ const getForecast = async (location) => {
 
 // Sava date into state object
 const saveCurrentWeather = (weatherData) => {
-    console.log(weatherData)
     state.cityName = weatherData.name
     state.day0 = {  date: formatDate(weatherData.dt),
-                    description: weatherData.weather[0].description,
+                    main: weatherData.weather[0].description.main,
+                    description: formatDescription(weatherData.weather[0].description),
                     temp: formatTemp(weatherData.main.temp),
                     feel: formatTemp(weatherData.main.feels_like),
                     wind: formatWindSpeed(weatherData.wind.speed),
@@ -56,11 +60,9 @@ const saveCurrentWeather = (weatherData) => {
 }
 
 const saveForecast = (weatherData) => {
-    console.log(weatherData)
     state.forecast = []
     for (let i = 6, day = 1; i < 40; i+=8, day++) {
         state.forecast.push({ date: formatDate(weatherData.list[i].dt),
-                             description: weatherData.list[i].weather[0].description,
                              icon: weatherData.list[i].weather[0].icon,
                              temp: formatTemp(weatherData.list[i].main.temp),
                             })
