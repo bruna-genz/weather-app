@@ -7,7 +7,7 @@ export const weatherInfoView = (weatherData) => {
         </div>
         <div id="main">
             <div id="left">
-                <img src="">
+                <img src="http://openweathermap.org/img/wn/${weatherData.day0.icon}@2x.png">
                 <h1>${weatherData.day0.temp}</h1>
                 <p>°C | °F</p>
             </div>

@@ -8,7 +8,7 @@ const searchButton = document.querySelector("#search-button")
 const locationInput = document.querySelector("#location-input")
 const body = document.querySelector("body")
 
-// !FIX THIS FUNCTIONS
+// Data formatting functions
 const formatDate = (date) => {
     const datesDic = {
         0: "Sunday",
@@ -23,6 +23,15 @@ const formatDate = (date) => {
     return datesDic[dayNumber]
 }
 
+const formatTemp = (temp) => {
+    return Math.round(temp)
+}
+
+const formatWindSpeed = (windSpeed) => {
+    return Math.round(windSpeed * 3.6)
+}
+
+// API calls 
 const getCurrentWeather = async (location) => {
     const result = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${key}&units=metric`, { mode: 'cors'})
     saveCurrentWeather(await result.json())
@@ -33,13 +42,16 @@ const getForecast = async (location) => {
     saveForecast(await result.json())
 }
 
+// Sava date into state object
 const saveCurrentWeather = (weatherData) => {
+    console.log(weatherData)
     state.cityName = weatherData.name
     state.day0 = {  date: formatDate(weatherData.dt),
                     description: weatherData.weather[0].description,
-                    temp: weatherData.main.temp,
-                    feel: weatherData.main.feels_like,
-                    wind: weatherData.wind.speed
+                    temp: formatTemp(weatherData.main.temp),
+                    feel: formatTemp(weatherData.main.feels_like),
+                    wind: formatWindSpeed(weatherData.wind.speed),
+                    icon: weatherData.weather[0].icon
                 }
 }
 
@@ -49,12 +61,13 @@ const saveForecast = (weatherData) => {
     for (let i = 6, day = 1; i < 40; i+=8, day++) {
         state.forecast.push({ date: formatDate(weatherData.list[i].dt),
                              description: weatherData.list[i].weather[0].description,
-                             temp: weatherData.list[i].main.temp,
+                             icon: weatherData.list[i].weather[0].icon,
+                             temp: formatTemp(weatherData.list[i].main.temp),
                             })
-                            console.log(weatherData.list[i])
     }
 }
 
+// Render views
 const renderWeatherInfo = () => {
     const weatherView = weatherInfoView(state)
     body.insertAdjacentHTML("beforeend", weatherView)
@@ -63,7 +76,7 @@ const renderWeatherInfo = () => {
 
 const forecastView = (forecastArray) => {
     const forecastViewArray = forecastArray.map(current => {
-        return `<div><p>${current.date}</p><p>${current.description}</p><p>${current.temp}</p></div>`
+        return `<div><p>${current.date}</p><img src="http://openweathermap.org/img/wn/${current.icon}@2x.png"><p>${current.temp}°</p></div>`
     })
     return forecastViewArray
 }
