@@ -4,7 +4,6 @@ import { weatherInfoView } from "./views/weatherInfoView"
 // Variables
 const state = {} // city name, description, coord, temp, feels like, wind speed
 const key = "c751dd140c912dd0b6a6f02af1f50ee9"
-const searchButton = document.querySelector("#search-button")
 const locationInput = document.querySelector("#location-input")
 const body = document.querySelector("body")
 
