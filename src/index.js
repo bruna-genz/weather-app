@@ -36,13 +36,13 @@ const formatDescription = (des) => {
 }
 
 // API calls 
-const getCurrentWeather = async (location) => {
-    const result = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${key}&units=metric`, { mode: 'cors'})
+const getCurrentWeather = async (location, unit) => {
+    const result = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${key}&units=${unit}`, { mode: 'cors'})
     saveCurrentWeather(await result.json())
 }
 
-const getForecast = async (location) => {
-    const result = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=${key}&units=metric`, { mode: 'cors'})
+const getForecast = async (location, unit = "metric") => {
+    const result = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=${key}&units=${unit}`, { mode: 'cors'})
     saveForecast(await result.json())
 }
 
@@ -91,9 +91,12 @@ const renderForecast = () => {
 }
 
 // Events
-searchButton.addEventListener("click", async () => {
-    await getCurrentWeather(locationInput.value)
-    await getForecast(locationInput.value)
-    renderWeatherInfo()
+body.addEventListener("click", async (e) => {
+    if (e.target.matches("button")) {
+        const unit = e.target.dataset.unit
+        await getCurrentWeather(locationInput.value, unit)
+        await getForecast(locationInput.value, unit)
+        body.removeChild(body.children[1])
+        renderWeatherInfo()
+    }
 })
-
