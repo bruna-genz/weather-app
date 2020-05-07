@@ -1,10 +1,8 @@
 export const weatherInfoView = (weatherData) => {
-    console.log(weatherData)
-
     const view = `<div id="weather-info">
         <div id="intro">
             <h2>${weatherData.cityName}</h2>
-            <p>Wednesday</p>
+            <p>${weatherData.day0.date}</p>
             <p>${weatherData.day0.description}</p>
         </div>
         <div id="main">
