@@ -1,8 +1,9 @@
 import "../src/assets/styles.scss";
 import { weatherInfoView } from "./views/weatherInfoView"
+import { loaderView } from "./views/loaderView"
 
 // Variables
-const state = {} // city name, description, coord, temp, feels like, wind speed
+const state = { unit: "metric"} // unit, city name, description, coord, temp, feels like, wind speed, forecast
 const key = "c751dd140c912dd0b6a6f02af1f50ee9"
 const locationInput = document.querySelector("#location-input")
 const body = document.querySelector("body")
@@ -39,28 +40,32 @@ const formatDescription = (des) => {
 }
 
 // API calls 
-const getWeatherData = async (location, unit) => {
-
-    // API call fot the current weather
-    const resultCurrent = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${key}&units=${unit}`, { mode: 'cors'})
-    // API call for next 5 days forecas
-    const resultForecast = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=${key}&units=${unit}`, { mode: 'cors'})
-    
-    if (resultCurrent.status == 200 && resultForecast.status == 200) {
-        saveCurrentWeather(await resultCurrent.json())
-        saveForecast(await resultForecast.json())
-        return true
-    } else {
-        alert("Location not found")
-        return false
+const makeApiCall = async (location, unit) => {
+    try {
+        // API call fot the current weather
+        const resultCurrent = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${key}&units=${unit}`, { mode: 'cors'})
+        // API call for next 5 days forecas
+        const resultForecast = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=${key}&units=${unit}`, { mode: 'cors'})
+        
+        if (resultCurrent.status == 200 && resultForecast.status == 200) {
+            saveCurrentWeather(await resultCurrent.json())
+            saveForecast(await resultForecast.json())
+            return true
+        } else {
+            alert("Location not found")
+            return false
+        }
+    } catch(error) {
+        alert(error)
     }
 }
 
 // Sava date into state object
 const saveCurrentWeather = (weatherData) => {
+    console.log(weatherData)
     state.cityName = weatherData.name
+    state.condition = weatherData.weather[0].main
     state.day0 = {  date: formatDate(weatherData.dt),
-                    main: weatherData.weather[0].description.main,
                     description: formatDescription(weatherData.weather[0].description),
                     temp: formatTemp(weatherData.main.temp),
                     feel: formatTemp(weatherData.main.feels_like),
@@ -84,6 +89,7 @@ const renderWeatherInfo = () => {
     const weatherView = weatherInfoView(state)
     body.insertAdjacentHTML("beforeend", weatherView)
     renderForecast()
+    setBackground()
 }
 
 const forecastView = (forecastArray) => {
@@ -100,15 +106,47 @@ const renderForecast = () => {
     })
 }
 
+const setBackground = () => {
+    console.log(state.condition)
+    body.classList.add(state.condition)
+}
+
+const renderLoader = () => {
+    body.insertAdjacentHTML("beforeend", loaderView)
+}
+
+const removeLoader = () => {
+    const loader = document.querySelector("#loader")
+    body.removeChild(loader)
+}
+
 // Events
-body.addEventListener("click", async (e) => {
+const sleep = (milliseconds) => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds))
+  }
+
+const getWeather = async () => {
+    renderLoader()
+    const response = await makeApiCall(locationInput.value, state.unit)
+    
+    if (response) {
+        await sleep(2000)
+        body.removeChild(body.children[1])
+        renderWeatherInfo()
+    }
+
+    removeLoader()
+}
+
+body.addEventListener("click", (e) => {
     if (e.target.matches("button")) {
         state.unit = e.target.dataset.unit
-        const response = await getWeatherData(locationInput.value, state.unit)
-        
-        if (response) {
-            body.removeChild(body.children[1])
-            renderWeatherInfo()
-        }
+        getWeather()
+    }
+})
+
+document.addEventListener("keypress", (e) => {
+    if (event.key == "Enter") {
+        getWeather()
     }
 })
