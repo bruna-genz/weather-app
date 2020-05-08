@@ -1,26 +1,31 @@
 import "../src/assets/styles.scss";
 import { weatherInfoView } from "./views/weatherInfoView"
 import { loaderView } from "./views/loaderView"
+import { forecastView } from "./views/forecastView"
 
 // Variables
 const state = { unit: "metric"} // unit, city name, description, coord, temp, feels like, wind speed, forecast
 const key = "c751dd140c912dd0b6a6f02af1f50ee9"
 const locationInput = document.querySelector("#location-input")
 const body = document.querySelector("body")
+const weatherContainer = document.querySelector("#weather-info-container")
 
 // Data formatting functions
-const formatDate = (date) => {
+const formatDate = (timestamp) => {
     const datesDic = {
-        0: "Sunday",
-        1: "Monday",
-        2: "Tuesday",
-        3: "Wednesday",
-        4: "Thursday",
-        5: "Friday",
-        6: "Saturday"
+        "Sun": "Sunday",
+        "Mon": "Monday",
+        "Tue": "Tuesday",
+        "Wed": "Wednesday",
+        "Thu": "Thursday",
+        "Fri": "Friday",
+        "Sat": "Saturday"
     }
-    const dayNumber = new Date(date * 1000).getDay()
-    return datesDic[dayNumber]
+
+    const dateArray = new Date(timestamp * 1000).toDateString().split(" ")
+    const weekDay = datesDic[dateArray[0]]
+    const day = `${dateArray[1]} ${dateArray[2]}`
+    return [weekDay, day]
 }
 
 const formatTemp = (temp) => {
@@ -62,19 +67,21 @@ const makeApiCall = async (location, unit) => {
 
 // Sava date into state object
 const saveCurrentWeather = (weatherData) => {
-    console.log(weatherData)
-    state.cityName = weatherData.name
+    state.location = [weatherData.name, weatherData.sys.country]
     state.condition = weatherData.weather[0].main
     state.day0 = {  date: formatDate(weatherData.dt),
                     description: formatDescription(weatherData.weather[0].description),
                     temp: formatTemp(weatherData.main.temp),
                     feel: formatTemp(weatherData.main.feels_like),
                     wind: formatWindSpeed(weatherData.wind.speed),
+                    sunrise: weatherData.sys.sunrise,
+                    sunset: weatherData.sys.sunset,
                     icon: weatherData.weather[0].icon
                 }
 }
 
 const saveForecast = (weatherData) => {
+    console.log(weatherData)
     state.forecast = []
     for (let i = 6, day = 1; i < 40; i+=8, day++) {
         state.forecast.push({   date: formatDate(weatherData.list[i].dt),
@@ -85,39 +92,49 @@ const saveForecast = (weatherData) => {
 }
 
 // Render views
+const toggleBtn = () => {
+    if (state.unit == "imperial") {
+        const cBtn = document.querySelector("#c-button")
+        const fBtn = document.querySelector("#f-button")
+
+        cBtn.classList.toggle("selected")
+        fBtn.classList.toggle("selected")
+    }
+}
+
 const renderWeatherInfo = () => {
     const weatherView = weatherInfoView(state)
-    body.insertAdjacentHTML("beforeend", weatherView)
+    weatherContainer.insertAdjacentHTML("afterbegin", weatherView)
+    toggleBtn()
     renderForecast()
     setBackground()
 }
 
-const forecastView = (forecastArray) => {
-    const forecastViewArray = forecastArray.map(current => {
-        return `<div><p>${current.date}</p><img src="http://openweathermap.org/img/wn/${current.icon}@2x.png"><p>${current.temp}°</p></div>`
+const getForecastView = (forecastDataArray) => {
+    const forecastViewArray = forecastDataArray.map(current => {
+        return forecastView(current)
     })
     return forecastViewArray
 }
 
 const renderForecast = () => {
     const forecastContainer = document.querySelector("#next-days")
-    forecastView(state.forecast).forEach( dayView => {
-    forecastContainer.insertAdjacentHTML("beforeend", dayView)
+    getForecastView(state.forecast).forEach( dayView => {
+        forecastContainer.insertAdjacentHTML("beforeend", dayView)
     })
 }
 
 const setBackground = () => {
-    console.log(state.condition)
-    body.classList.add(state.condition)
+    weatherContainer.classList.add(state.condition)
 }
 
 const renderLoader = () => {
-    body.insertAdjacentHTML("beforeend", loaderView)
+    weatherContainer.insertAdjacentHTML("beforeend", loaderView)
 }
 
 const removeLoader = () => {
     const loader = document.querySelector("#loader")
-    body.removeChild(loader)
+    weatherContainer.removeChild(loader)
 }
 
 // Events
@@ -131,7 +148,7 @@ const getWeather = async () => {
     
     if (response) {
         await sleep(2000)
-        body.removeChild(body.children[1])
+        weatherContainer.removeChild(weatherContainer.children[0])
         renderWeatherInfo()
     }
 
@@ -140,6 +157,15 @@ const getWeather = async () => {
 
 body.addEventListener("click", (e) => {
     if (e.target.matches("button")) {
+
+        /*if (e.target.matches("#c-button") || e.target.matches("#f-button")) {
+            const celem = document.querySelector("#c-button")
+            const felem = document.querySelector("#f-button")
+
+            celem.classList.toggle("selected")
+            celem.classList.toggle("selected")
+        }*/
+
         state.unit = e.target.dataset.unit
         getWeather()
     }
