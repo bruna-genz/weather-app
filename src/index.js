@@ -1,7 +1,8 @@
 import "../src/assets/styles.scss";
-import { weatherInfoView } from "./views/weatherInfoView"
-import { loaderView } from "./views/loaderView"
-import { forecastView } from "./views/forecastView"
+import { weatherInfoView } from "./views/weatherInfoView";
+import { loaderView } from "./views/loaderView";
+import { forecastView } from "./views/forecastView";
+import { dayLengthView } from "./views/dayLengthView";
 
 // Variables
 const state = { unit: "metric"} // unit, city name, description, coord, temp, feels like, wind speed, forecast
@@ -140,8 +141,8 @@ const renderForecast = () => {
 const renderDayLength = () => {
     const lengthContainer = document.querySelector("#day-length")
     const dayLength = calcDayLength()
-    const dayLengthView = `<h4>Day length: ${dayLength}</h4><div><p>sunrise: ${state.day0.sunrise[1]}</p><p>sunset: ${state.day0.sunset[1]}</p></div>`
-    lengthContainer.insertAdjacentHTML("afterbegin", dayLengthView)
+    const view = dayLengthView(dayLength, state.day0.sunrise[1], state.day0.sunset[1])
+    lengthContainer.insertAdjacentHTML("afterbegin", view)
 }
 
 const setBackground = () => {

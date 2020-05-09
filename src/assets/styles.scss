@@ -129,6 +129,41 @@ html, body {
     }
 }
 
+#day-length {
+    h4 {
+        font-family: 'Gotu', sans-serif;
+        font-size: 20px;
+    }
+    #length-info {
+        margin-top: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        #length-images {
+            display: flex;
+            width: 70%;
+            column-gap: 4em;
+            margin-left: 20px;
+            #sunrise-img, #sunset-img {
+                width: 80px;
+                height: 80px;
+                background-size: cover;
+                margin-bottom: 5px;
+            }
+            #sunrise-img {
+                background-image: url("./sunrise.png");
+            }
+            #sunset-img {
+                background-image: url("./sunset.png");
+            }
+        }
+        #lenght-paragraph {
+            width: 21%;
+            line-height: 25px;
+        }
+    }
+}
+
 #next-days {
     .forecast-day {
         border-bottom: solid 1px gray;
