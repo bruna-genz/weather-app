@@ -4,7 +4,7 @@ export const weatherInfoView = (weatherData) => {
         <div id="current-weather" class="info-box">
             <div id="intro">
                 <h2>${weatherData.location[0]}, ${weatherData.location[1]}</h2>
-                <p>${weatherData.day0.date}</p>
+                <p>${weatherData.day0.date[0]}</p>
                 <p>${weatherData.day0.description}</p>
             </div>
             <div id="main">
@@ -25,7 +25,7 @@ export const weatherInfoView = (weatherData) => {
                 </div>
             </div>
         </div>
-        <div id="day-duration" class="info-box">
+        <div id="day-length" class="info-box">
 
         </div>
         <div id="next-days" class="info-box">

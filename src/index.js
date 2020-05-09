@@ -28,6 +28,12 @@ const formatDate = (timestamp) => {
     return [weekDay, day]
 }
 
+const formatTime = (timestamp) => {
+    const date = new Date(timestamp * 1000)
+    const formatedTime = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+    return [date, formatedTime]
+}
+
 const formatTemp = (temp) => {
     return Math.round(temp)
 }
@@ -42,6 +48,13 @@ const formatWindSpeed = (windSpeed) => {
 
 const formatDescription = (des) => {
     return des[0].toUpperCase() + des.slice(1)
+}
+
+const calcDayLength = () => {
+    const difInMs = (state.day0.sunset[0].getTime() - state.day0.sunrise[0].getTime()) // difference in milliseconds
+    const hours = Math.floor(difInMs / (1000 * 60 * 60))
+    const minutes = Math.round((difInMs % (1000 * 60 * 60)) / (1000 * 60))  
+    return `${hours}h ${minutes}min`
 }
 
 // API calls 
@@ -74,14 +87,13 @@ const saveCurrentWeather = (weatherData) => {
                     temp: formatTemp(weatherData.main.temp),
                     feel: formatTemp(weatherData.main.feels_like),
                     wind: formatWindSpeed(weatherData.wind.speed),
-                    sunrise: weatherData.sys.sunrise,
-                    sunset: weatherData.sys.sunset,
+                    sunrise: formatTime(weatherData.sys.sunrise),
+                    sunset: formatTime(weatherData.sys.sunset),
                     icon: weatherData.weather[0].icon
                 }
 }
 
 const saveForecast = (weatherData) => {
-    console.log(weatherData)
     state.forecast = []
     for (let i = 6, day = 1; i < 40; i+=8, day++) {
         state.forecast.push({   date: formatDate(weatherData.list[i].dt),
@@ -106,6 +118,7 @@ const renderWeatherInfo = () => {
     const weatherView = weatherInfoView(state)
     weatherContainer.insertAdjacentHTML("afterbegin", weatherView)
     toggleBtn()
+    renderDayLength()
     renderForecast()
     setBackground()
 }
@@ -122,6 +135,13 @@ const renderForecast = () => {
     getForecastView(state.forecast).forEach( dayView => {
         forecastContainer.insertAdjacentHTML("beforeend", dayView)
     })
+}
+
+const renderDayLength = () => {
+    const lengthContainer = document.querySelector("#day-length")
+    const dayLength = calcDayLength()
+    const dayLengthView = `<h4>Day length: ${dayLength}</h4><div><p>sunrise: ${state.day0.sunrise[1]}</p><p>sunset: ${state.day0.sunset[1]}</p></div>`
+    lengthContainer.insertAdjacentHTML("afterbegin", dayLengthView)
 }
 
 const setBackground = () => {
@@ -147,7 +167,7 @@ const getWeather = async () => {
     const response = await makeApiCall(locationInput.value, state.unit)
     
     if (response) {
-        await sleep(2000)
+        await sleep(1000)
         weatherContainer.removeChild(weatherContainer.children[0])
         renderWeatherInfo()
     }
