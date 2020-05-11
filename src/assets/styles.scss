@@ -1,4 +1,5 @@
 @import "./loader.scss";
+@import "./backgrounds.scss";
 @import url('https://fonts.googleapis.com/css2?family=Gotu&display=swap');
 
 * {
@@ -14,6 +15,8 @@ html, body {
 #wrapper {
     min-height: 225px;
     height: 25%;
+    z-index: 100;
+    position: relative;
     background: rgb(131,205,230);
     background: linear-gradient(180deg, rgba(131,205,230,1) 0%, rgba(149,205,230,1) 50%, rgba(131,205,230,1) 100%); 
     #form-container {
@@ -68,13 +71,14 @@ html, body {
         flex-wrap: wrap;
         column-gap: 100px;
         max-height: 500px;
-        justify-content: space-evenly;
+        justify-content: space-between;
         width: 70%;
         margin: 5em auto;
         .info-box {
             border: solid 1px gray;
             background-color: white;
             padding: 25px;
+            z-index: 100;
         }
     }
 }
