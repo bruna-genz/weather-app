@@ -12,13 +12,20 @@ html, body {
     height: 100%;
 }
 
+body {
+    background-color: rgba(131, 205, 230, 0.897);
+}
+
 #wrapper {
     min-height: 225px;
     height: 25%;
+    width: 30%;
     z-index: 100;
     position: relative;
-    background: rgb(131,205,230);
-    background: linear-gradient(180deg, rgba(131,205,230,1) 0%, rgba(149,205,230,1) 50%, rgba(131,205,230,1) 100%); 
+    top: 20px;
+    margin: 0 auto;
+    border: 1px solid #000;
+    background: rgba(255, 255, 255, 0.747);
     #form-container {
         display: flex;
         flex-direction: column;
@@ -29,7 +36,7 @@ html, body {
             font-family: 'Gotu', sans-serif;
             font-size: 45px;
             margin: 35px 0 15px 0px;
-            color: #484747;
+            color: #000;
         }   
         #location-form {
             display: flex;
@@ -45,11 +52,11 @@ html, body {
             #search-button {
                 width: 20%;
                 border: none;
-                background-color:  #737272;
+                background-color:  #3e3333;
                 color: white;
                 &:hover {
                     cursor: pointer;
-                    background-color:  #9e9d9d
+                    background-color:  #797777
                 }
             }
         }
@@ -58,13 +65,13 @@ html, body {
 
 #weather-info-container {
     min-height: 680px;
-    background-color: #eeeeeec4;
     background-image: url("./skyline.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position-y: 155%;
-    opacity: 0.7;
     overflow: hidden;
+    z-index: 90;
+    position: relative;
     #weather-info {
         display: flex;
         flex-direction: column;

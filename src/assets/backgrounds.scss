@@ -1,3 +1,5 @@
+/*
+! need to change the background color
 #weather-info-container::before {
     content: '';
     position: absolute;
@@ -17,4 +19,95 @@
     100% {
         background-position: -15% 100%;
     }
+}*/
+
+/*#weather-info-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 75%;
+    background-image: url("./images/clouds4.png");
+    background-size: contain;
+    opacity: 0.9;
+    animation: slide 50s linear infinite;
+}
+
+@keyframes slide {
+    0% {
+        background-position: 0;
+    }
+    100% {
+        background-position: 900px;
+    }
+}*/
+
+/*
+
+! have to add the sun div (<div id="sun"></div>)
+#sun {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #EC6E4C;
+    -webkit-box-shadow: 0px 0px 42px 23px rgba(236,139,52,0.81), 0px 0px 48px 44px rgba(255,242,30,0.81), 0px 0px 48px 50px rgba(244,255,109,0.81); 
+    box-shadow: 0px 0px 42px 23px rgba(236,139,52,0.81), 0px 0px 48px 44px rgba(255,242,30,0.81), 0px 0px 48px 50px rgba(244,255,109,0.81);
+    animation: sunSlide 50s linear infinite;
+}
+
+@keyframes sunSlide {
+    0% {
+        top: 45%;
+        left: 0%;
+    }
+    25% {
+        top: 25%;
+        left: 23%;
+    }
+    48% {
+        top: 15%;
+        left: 43%;
+    }
+    50% {
+        top: 15%;
+        left: 45%;
+    }
+    75% {
+        top: 25%;
+        left: 69%;
+    }
+    100% {
+        top: 45%;
+        left: 93%;
+    }
+}*/
+
+
+#stars, #twinkling {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+#stars {
+    background: #000 url(http://www.script-tutorials.com/demos/360/images/stars.png) repeat top center;
+    z-index: 1;
+}
+
+#twinkling{
+    background: transparent url(http://www.script-tutorials.com/demos/360/images/twinkling.png) repeat top center;
+    z-index: 2;
+    animation: move-twink-back 200s linear infinite;
+}
+
+@keyframes move-twink-back {
+    from {background-position:0 0;}
+    to {background-position:-10000px 5000px;}
 }
