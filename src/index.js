@@ -66,7 +66,7 @@ const makeApiCall = async (location, unit) => {
         // API call for next 5 days forecas
         const resultForecast = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=${key}&units=${unit}`, { mode: 'cors'})
         
-        if (resultCurrent.status == 200 && resultForecast.status == 200) {
+        if (resultCurrent.status === 200 && resultForecast.status === 200) {
             saveCurrentWeather(await resultCurrent.json())
             saveForecast(await resultForecast.json())
             return true
@@ -82,7 +82,7 @@ const makeApiCall = async (location, unit) => {
 // Sava date into state object
 const saveCurrentWeather = (weatherData) => {
     state.location = [weatherData.name, weatherData.sys.country]
-    state.condition = weatherData.weather[0].main
+    //state.condition = weatherData.weather[0].main
     state.day0 = {  date: formatDate(weatherData.dt),
                     description: formatDescription(weatherData.weather[0].description),
                     temp: formatTemp(weatherData.main.temp),
@@ -146,7 +146,47 @@ const renderDayLength = () => {
 }
 
 const setBackground = () => {
-    weatherContainer.classList.add(state.condition)
+    const c = state.day0.icon
+    console.log(c)
+    
+    // clear day - 01d
+    if (c === "01d") {
+        body.insertAdjacentHTML("afterbegin", "<div id='sun'></div>")
+    
+    // clear night - 01n
+    } else if (c === "01n") {  
+        body.insertAdjacentHTML("afterbegin", "<div id='stars'></div>")
+        body.insertAdjacentHTML("afterbegin", "<div id='twinkling'></div>")        
+    
+    // cloudy day - 02d 03d
+    } else if (c === "02d" || c === "03d") {
+        body.insertAdjacentHTML("afterbegin", "<div id='clouds' class='few-clouds'></div>")        
+     
+    // cloudy night - 02n 03n
+    } else if (c === "02n" || c === "03n") {
+        body.insertAdjacentHTML("afterbegin", "<div id='clouds' class='few-clouds'></div>")
+        body.insertAdjacentHTML("afterbegin", "<div id='stars'></div>")
+        body.insertAdjacentHTML("afterbegin", "<div id='twinkling'></div>") 
+
+    // very cloudy day - 04d
+    } else if (c === "04d") {
+        body.insertAdjacentHTML("afterbegin", "<div id='clouds' class='many-clouds'></div>")  
+    
+    // very cloudy night - 04n
+    } else if (c === "04n") {
+        body.insertAdjacentHTML("afterbegin", "<div id='clouds' class='many-clouds'></div>")  
+        body.style.backgroundColor = "#000"
+     
+    // rain day - 09d 10d 11d
+    } else if (c === "09d" || c === "10d" || c === "11d") {
+        body.insertAdjacentHTML("afterbegin", "<div id='rain'></div>")
+        body.style.backgroundColor = "#d5d2d2"
+
+    // rain night - 09n 10n 11n
+    } else if (c === "09n" || c === "10n" || c === "11n") {
+        body.insertAdjacentHTML("afterbegin", "<div id='rain'></div>")
+        body.style.backgroundColor = "#393737"
+    }
 }
 
 const renderLoader = () => {
@@ -165,28 +205,24 @@ const sleep = (milliseconds) => {
 
 const getWeather = async () => {
     renderLoader()
-    const response = await makeApiCall(locationInput.value, state.unit)
-    
-    if (response) {
-        await sleep(1000)
-        weatherContainer.removeChild(weatherContainer.children[0])
-        renderWeatherInfo()
-    }
 
-    removeLoader()
+    if (locationInput.value) {
+        const response = await makeApiCall(locationInput.value, state.unit)
+    
+        if (response) {
+            await sleep(1000)
+            weatherContainer.removeChild(weatherContainer.children[0])
+            renderWeatherInfo()
+        }
+
+        removeLoader()
+    } else {
+        alert("Please, insert a location.")
+    }
 }
 
 body.addEventListener("click", (e) => {
     if (e.target.matches("button")) {
-
-        /*if (e.target.matches("#c-button") || e.target.matches("#f-button")) {
-            const celem = document.querySelector("#c-button")
-            const felem = document.querySelector("#f-button")
-
-            celem.classList.toggle("selected")
-            celem.classList.toggle("selected")
-        }*/
-
         state.unit = e.target.dataset.unit
         getWeather()
     }
