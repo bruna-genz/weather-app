@@ -19,10 +19,10 @@ body {
 #wrapper {
     min-height: 225px;
     height: 25%;
-    width: 30%;
+    width: 35em;
     z-index: 100;
     position: relative;
-    top: 20px;
+    top: 35px;
     margin: 0 auto;
     border: 1px solid #000;
     background: rgba(255, 255, 255, 0.747);
@@ -65,10 +65,10 @@ body {
 
 #weather-info-container {
     min-height: 680px;
-    background-image: url("./skyline.png");
+    background-image: url("./images/skyline.png");
     background-size: contain;
     background-repeat: no-repeat;
-    background-position-y: 155%;
+    background-position: 50% 100%;
     overflow: hidden;
     z-index: 90;
     position: relative;

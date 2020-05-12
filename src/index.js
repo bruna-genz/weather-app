@@ -71,6 +71,8 @@ const makeApiCall = async (location, unit) => {
             saveForecast(await resultForecast.json())
             return true
         } else {
+            removeLoader()
+            clearBackground()
             alert("Location not found")
             return false
         }
@@ -82,7 +84,6 @@ const makeApiCall = async (location, unit) => {
 // Sava date into state object
 const saveCurrentWeather = (weatherData) => {
     state.location = [weatherData.name, weatherData.sys.country]
-    //state.condition = weatherData.weather[0].main
     state.day0 = {  date: formatDate(weatherData.dt),
                     description: formatDescription(weatherData.weather[0].description),
                     temp: formatTemp(weatherData.main.temp),
@@ -158,9 +159,21 @@ const renderSkyElement = (element, bgColor = null) => {
     }
 }
 
-const setBackground = () => {
-    const c = state.day0.icon
+const clearBackground = () => {
+    const bgElementsArray = ["sun", "clouds", "rain", "snow", "stars", "twinkling"].map(el => document.querySelector(`#${el}`))
+    bgElementsArray.forEach(el => {
+        if (el) {
+            el.parentElement.removeChild(el)
+        }
+    })
+    body.style.backgroundColor = "rgba(131, 205, 230, 0.897)"
+}
 
+const setBackground = () => {
+    clearBackground()
+    
+    const c = state.day0.icon
+    
     if (c === "01d") {  // clear day
         renderSkyElement("<div id='sun'></div>")
     
@@ -195,7 +208,7 @@ const setBackground = () => {
 }
 
 const renderLoader = () => {
-    weatherContainer.insertAdjacentHTML("beforeend", loaderView)
+    weatherContainer.insertAdjacentHTML("afterbegin", loaderView)
 }
 
 const removeLoader = () => {
@@ -208,19 +221,27 @@ const sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
   }
 
+const clearScreen = () => {
+    const weatherInfo = document.querySelector("#weather-info")
+    if (weatherInfo) {
+        weatherInfo.parentElement.removeChild(weatherInfo)
+    }
+}
+
 const getWeather = async () => {
-    renderLoader()
 
     if (locationInput.value) {
+        clearScreen() 
+        renderLoader()
+        await sleep(1000) // to simulate slower internet
+
         const response = await makeApiCall(locationInput.value, state.unit)
     
         if (response) {
-            await sleep(1000)
-            weatherContainer.removeChild(weatherContainer.children[0])
+            removeLoader()
             renderWeatherInfo()
         }
-
-        removeLoader()
+    
     } else {
         alert("Please, insert a location.")
     }
