@@ -145,47 +145,52 @@ const renderDayLength = () => {
     lengthContainer.insertAdjacentHTML("afterbegin", view)
 }
 
+const renderNightSky = () => {
+    body.insertAdjacentHTML("afterbegin", "<div id='stars'></div>")
+    body.insertAdjacentHTML("afterbegin", "<div id='twinkling'></div>") 
+}
+
+const renderSkyElement = (element, bgColor = null) => {
+    body.insertAdjacentHTML("afterbegin", element)
+
+    if (bgColor) {
+        body.style.backgroundColor = bgColor
+    }
+}
+
 const setBackground = () => {
     const c = state.day0.icon
-    console.log(c)
-    
-    // clear day - 01d
-    if (c === "01d") {
-        body.insertAdjacentHTML("afterbegin", "<div id='sun'></div>")
-    
-    // clear night - 01n
-    } else if (c === "01n") {  
-        body.insertAdjacentHTML("afterbegin", "<div id='stars'></div>")
-        body.insertAdjacentHTML("afterbegin", "<div id='twinkling'></div>")        
-    
-    // cloudy day - 02d 03d
-    } else if (c === "02d" || c === "03d") {
-        body.insertAdjacentHTML("afterbegin", "<div id='clouds' class='few-clouds'></div>")        
-     
-    // cloudy night - 02n 03n
-    } else if (c === "02n" || c === "03n") {
-        body.insertAdjacentHTML("afterbegin", "<div id='clouds' class='few-clouds'></div>")
-        body.insertAdjacentHTML("afterbegin", "<div id='stars'></div>")
-        body.insertAdjacentHTML("afterbegin", "<div id='twinkling'></div>") 
 
-    // very cloudy day - 04d
-    } else if (c === "04d") {
-        body.insertAdjacentHTML("afterbegin", "<div id='clouds' class='many-clouds'></div>")  
+    if (c === "01d") {  // clear day
+        renderSkyElement("<div id='sun'></div>")
     
-    // very cloudy night - 04n
-    } else if (c === "04n") {
-        body.insertAdjacentHTML("afterbegin", "<div id='clouds' class='many-clouds'></div>")  
-        body.style.backgroundColor = "#000"
+    } else if (c === "01n") {  // clear night
+        renderNightSky()
+    
+    } else if (c === "02d" || c === "03d") {  // cloudy day
+        renderSkyElement("<div id='clouds' class='few-clouds'></div>")      
      
-    // rain day - 09d 10d 11d
-    } else if (c === "09d" || c === "10d" || c === "11d") {
-        body.insertAdjacentHTML("afterbegin", "<div id='rain'></div>")
-        body.style.backgroundColor = "#d5d2d2"
+    } else if (c === "02n" || c === "03n") {   // cloudy night
+        renderSkyElement("<div id='clouds' class='few-clouds'></div>")
+        renderNightSky()
 
-    // rain night - 09n 10n 11n
-    } else if (c === "09n" || c === "10n" || c === "11n") {
-        body.insertAdjacentHTML("afterbegin", "<div id='rain'></div>")
-        body.style.backgroundColor = "#393737"
+    } else if (c === "04d") {  // very cloudy day
+        renderSkyElement("<div id='clouds' class='many-clouds'></div>")
+    
+    } else if (c === "04n") {   // very cloudy night
+        renderSkyElement("<div id='clouds' class='many-clouds'></div>", "#000")
+    
+    } else if (c === "09d" || c === "10d" || c === "11d") {  // rain day
+        renderSkyElement("<div id='rain'></div>", "#d5d2d2") 
+
+    } else if (c === "09n" || c === "10n" || c === "11n") {  // rain night
+        renderSkyElement("<div id='rain'></div>", "#393737")
+    
+    } else if (c === "13d") { // snow day
+        renderSkyElement("<div id='snow'></div>", "#d5d2d2")
+    
+    } else if (c === "13n") { // snow night
+        renderSkyElement("<div id='snow'></div>", "#393737")
     }
 }
 
