@@ -10,7 +10,7 @@ The weather app allows a user to search weather information for a specific locat
 - Day length;
 - Forecast temperature for the next five days.
 
-The user can also switch between metric and imperial units.
+The user can switch between metric and imperial units by clicking on desired unit symbol (°C or °F).
 
 ## Built With
 
