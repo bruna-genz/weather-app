@@ -21,6 +21,10 @@ The user can also switch between metric and imperial units.
 - Webpack;
 - Open Weather API.
 
+## Preview
+
+![screenshot](src/assets/images/the-weather-app.jpg)
+
 ## Live Demo
 
 [Live Demo Link]()
