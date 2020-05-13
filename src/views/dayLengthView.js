@@ -1,5 +1,4 @@
-export const dayLengthView = (dayLength, sunrise, sunset) => {
-    return `<h4>Sunrise / Sunset</h4>
+const dayLengthView = (dayLength, sunrise, sunset) => `<h4>Sunrise / Sunset</h4>
     <div id="length-info">
         <div id="length-images">
             <div>
@@ -12,5 +11,6 @@ export const dayLengthView = (dayLength, sunrise, sunset) => {
             </div>
         </div>
         <p id="lenght-paragraph">Day length: <br> ${dayLength}</p>
-    </div>`
-}
+    </div>`;
+
+export default dayLengthView;

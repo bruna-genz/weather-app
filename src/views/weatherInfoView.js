@@ -1,5 +1,5 @@
-export const weatherInfoView = (weatherData) => {
-    const view = `
+const weatherInfoView = (weatherData) => {
+  const view = `
     <div id="weather-info">
         <div id="current-weather" class="info-box">
             <div id="intro">
@@ -30,7 +30,9 @@ export const weatherInfoView = (weatherData) => {
         </div>
         <div id="next-days" class="info-box">
         </div>
-    </div>`
-    
-    return view
-}
+    </div>`;
+
+  return view;
+};
+
+export default weatherInfoView;

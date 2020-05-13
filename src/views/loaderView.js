@@ -1,5 +1,7 @@
-export const loaderView = `<div id="loader">
+const loaderView = `<div id="loader">
                                 <span></span>
                                 <span></span>
                                 <span></span>
-                            </div>`
+                            </div>`;
+
+export default loaderView;
