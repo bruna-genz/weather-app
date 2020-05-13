@@ -3,8 +3,12 @@
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: 16em;
-    left: 47%;
+    top: 35%;
+    left: 38%;
+    @media only screen and (min-width: 768px) {
+        top: 16em;
+        left: 47%;
+    }
     span {
         display: inline-block;
         background-color:  #737272;

@@ -1,91 +1,43 @@
-@import "./loader.scss";
-@import "./backgrounds.scss";
-@import url('https://fonts.googleapis.com/css2?family=Gotu&display=swap');
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html, body {
-    height: 100%;
-}
-
-body {
-    background-color: rgba(131, 205, 230, 0.897);
-}
-
-#wrapper {
-    min-height: 225px;
-    height: 25%;
-    width: 35em;
-    z-index: 100;
-    position: relative;
-    top: 35px;
-    margin: 0 auto;
-    border: 1px solid #000;
-    background: rgba(255, 255, 255, 0.747);
-    #form-container {
-        display: flex;
-        flex-direction: column;
-        width: 500px;
-        text-align: center;
-        margin: 0 auto;
-        #title {
-            font-family: 'Gotu', sans-serif;
-            font-size: 45px;
-            margin: 35px 0 15px 0px;
-            color: #000;
-        }   
-        #location-form {
-            display: flex;
-            height: 40px;
-            width: 90%;
-            border: solid 1px  #737272;
-            margin: 10px auto;
-            #location-input {
-                width: 80%;
-                padding-left: 15px;
-                border: none;
-            }
-            #search-button {
-                width: 20%;
-                border: none;
-                background-color:  #3e3333;
-                color: white;
-                &:hover {
-                    cursor: pointer;
-                    background-color:  #797777
-                }
-            }
-        }
-    }
-}
-
 #weather-info-container {
-    min-height: 680px;
+    height: 73%; 
     background-image: url("./images/skyline.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: 50% 100%;
-    overflow: hidden;
+    overflow: auto;
     z-index: 90;
     position: relative;
+    top: 27%;
+    @media only screen and (min-width: 768px) {
+        //****** min-height: 680px;
+    }
     #weather-info {
         display: flex;
         flex-direction: column;
-        flex-wrap: wrap;
-        column-gap: 100px;
-        max-height: 500px;
+        flex-wrap: nowrap;
+        row-gap: 10px;
         justify-content: space-between;
-        width: 70%;
-        margin: 5em auto;
+        width: 85%;
+        margin: 0 auto 2em auto;
+        @media only screen and (min-width: 768px) {
+            flex-wrap: wrap;
+            column-gap: 100px;
+            margin: 5em auto;
+            width: 70%;
+            //******* max-height: 500px;
+        }
         .info-box {
             border: solid 1px gray;
             background-color: white;
-            padding: 25px;
+            padding: 12px;
             z-index: 100;
+            @media only screen and (min-width: 768px) {
+                padding: 25px;
+            }
+            img {
+                width: 65px;
+                height: 65px;
+            }
         }
     }
 }
@@ -94,10 +46,14 @@ body {
     #intro {
         h2 {
             margin-bottom: 5px;
-            font-size: 30px;
+            font-size: 20px;
             font-family: 'Gotu', sans-serif;
+            @media only screen and (min-width: 768px) {
+                font-size: 30px;
+            }
         }
         p {
+            font-size: 15px;
             margin-bottom: 5px;
         }
     }
@@ -111,17 +67,26 @@ body {
             #temp {
                 display: flex;
                 padding-top: 6px;
-                font-size: 30px;
+                font-size: 15px;
                 font-family: 'Gotu', sans-serif;
+                @media only screen and (min-width: 768px) {
+                    font-size: 30px;
+                }
                 #units-container {
-                    font-size: 20px;
+                    font-size: 12px;
                     margin: 5px 0 0 1px;
-                    button {
+                    @media only screen and (min-width: 768px) {
                         font-size: 20px;
+                    }
+                    button {
+                        font-size: 15px;
                         background-color: white;
                         border: none;
                         margin: 0 5px;
                         color: #c0c0c0;
+                        @media only screen and (min-width: 768px) {
+                            font-size: 20px;
+                        }
                         &:hover {
                             cursor: pointer;
                         }
@@ -133,9 +98,15 @@ body {
             }
         }
         #right {
-            margin-right: 17px;
+            margin-right: 5px;
             line-height: 24px;
             padding-top: 3px;
+            p {
+                font-size: 15px;
+            }
+            @media only screen and (min-width: 768px) {
+                margin-right: 17px;
+            }
         }
     }
 }
@@ -146,31 +117,50 @@ body {
         font-size: 20px;
     }
     #length-info {
-        margin-top: 15px;
+        margin-top: 5px;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        @media only screen and (min-width: 768px) {
+            margin-top: 15px;
+        }
         #length-images {
             display: flex;
-            width: 70%;
-            column-gap: 4em;
-            margin-left: 20px;
+            width: 50%;
+            column-gap: 2em;
+            margin-left: 5px;
+            @media only screen and (min-width: 768px) {
+                width: 70%;
+                column-gap: 4em;
+                margin-left: 20px;
+            }
+            p {
+                font-size: 13px;
+            }
             #sunrise-img, #sunset-img {
-                width: 80px;
-                height: 80px;
+                width: 55px;
+                height: 55px;
                 background-size: cover;
                 margin-bottom: 5px;
+                @media only screen and (min-width: 768px) {
+                    width: 80px;
+                    height: 80px;
+                }
             }
             #sunrise-img {
-                background-image: url("./sunrise.png");
+                background-image: url("./images/sunrise.png");
             }
             #sunset-img {
-                background-image: url("./sunset.png");
+                background-image: url("./images/sunset.png");
             }
         }
         #lenght-paragraph {
-            width: 21%;
+            font-size: 15px;
+            width: 35%;
             line-height: 25px;
+            @media only screen and (min-width: 768px) {
+                width: 21%;
+            }
         }
     }
 }

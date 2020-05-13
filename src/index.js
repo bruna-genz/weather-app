@@ -1,4 +1,4 @@
-import "../src/assets/styles.scss";
+import "../src/assets/global.scss";
 import { weatherInfoView } from "./views/weatherInfoView";
 import { loaderView } from "./views/loaderView";
 import { forecastView } from "./views/forecastView";
