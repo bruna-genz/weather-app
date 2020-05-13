@@ -1,13 +1,9 @@
 @media only screen and (min-width: 768px) {
     #wrapper {
-        min-height: 225px;
+        min-height: 180px;
         #form-container {
             #title {
-                font-size: 45px;
-                margin: 35px 0 15px 0px;
-            }
-            #location-form {
-                height: 40px;
+                font-size: 30px;
             }
         }
     }
@@ -15,7 +11,6 @@
     #weather-info-container {
         #weather-info {
             width: 70%;
-            //******* max-height: 500px;
             .info-box {
                 padding: 25px;
             }

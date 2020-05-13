@@ -1,0 +1,67 @@
+@media only screen and (min-width: 1200px) {
+    #wrapper {
+        left: 32%;
+        min-height: 225px;
+        #form-container {
+            #title {
+                font-size: 45px;
+                margin: 35px 0 15px 0px;
+            }
+            #location-form {
+                width: 70%;
+                height: 40px;
+                #location-input {
+                    width: 75%;
+                }
+                #search-button {
+                    width: 25%;
+                }
+            }
+        }
+    }
+
+    #weather-info-container {
+        #weather-info {
+            column-gap: 100px;
+            margin: 5em auto;
+            width: 70%;
+            .info-box {
+                img {
+                    width: 85px;
+                    height: 85px;
+                }
+            }
+        }
+    }
+
+    #current-weather {
+        #intro {
+            p {
+                font-size: 17px;
+            }
+        }
+        #main {
+            #right {
+                width: 30%;
+                margin-right: 0;
+                p {
+                    font-size: 17px;
+                }
+            }
+        }
+    }
+
+    #day-length {
+        #length-info {
+            #length-images {
+                p {
+                    font-size: 17px;
+                }
+            }
+            #lenght-paragraph {
+                font-size: 17px;
+                width: 30%;
+            }
+        }
+    }
+}

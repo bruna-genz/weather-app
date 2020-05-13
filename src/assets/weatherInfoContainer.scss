@@ -8,9 +8,6 @@
     z-index: 90;
     position: relative;
     top: 27%;
-    @media only screen and (min-width: 768px) {
-        //****** min-height: 680px;
-    }
     #weather-info {
         display: flex;
         flex-direction: column;
