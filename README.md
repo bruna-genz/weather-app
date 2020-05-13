@@ -23,7 +23,7 @@ The user can also switch between metric and imperial units.
 
 ## Preview
 
-![screenshot](src/assets/images/the-weather-app.jpg)
+![screenshot](src/assets/images/the-weather-app.png)
 
 ## Live Demo
 
