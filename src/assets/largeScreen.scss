@@ -1,19 +1,10 @@
-@media only screen and (min-width: 768px) {
-    #wrapper {
-        min-height: 225px;
-        #form-container {
-            #title {
-                font-size: 45px;
-                margin: 35px 0 15px 0px;
-            }
-            #location-form {
-                height: 40px;
-            }
-        }
-    }
-
+@media only screen and (min-width: 992px) {
     #weather-info-container {
         #weather-info {
+            flex-direction: row;
+            flex-wrap: wrap;
+            column-gap: 100px;
+            margin: 5em auto;
             width: 70%;
             //******* max-height: 500px;
             .info-box {

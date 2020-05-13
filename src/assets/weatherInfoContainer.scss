@@ -19,22 +19,11 @@
         justify-content: space-between;
         width: 85%;
         margin: 0 auto 2em auto;
-        @media only screen and (min-width: 768px) {
-            flex-direction: row;
-            flex-wrap: wrap;
-            column-gap: 100px;
-            margin: 5em auto;
-            width: 70%;
-            //******* max-height: 500px;
-        }
         .info-box {
             border: solid 1px gray;
             background-color: white;
             padding: 12px;
             z-index: 100;
-            @media only screen and (min-width: 768px) {
-                padding: 25px;
-            }
             img {
                 width: 65px;
                 height: 65px;
@@ -49,9 +38,6 @@
             margin-bottom: 5px;
             font-size: 20px;
             font-family: 'Gotu', sans-serif;
-            @media only screen and (min-width: 768px) {
-                font-size: 30px;
-            }
         }
         p {
             font-size: 15px;
@@ -70,24 +56,15 @@
                 padding-top: 6px;
                 font-size: 15px;
                 font-family: 'Gotu', sans-serif;
-                @media only screen and (min-width: 768px) {
-                    font-size: 30px;
-                }
                 #units-container {
                     font-size: 12px;
                     margin: 5px 0 0 1px;
-                    @media only screen and (min-width: 768px) {
-                        font-size: 20px;
-                    }
                     button {
                         font-size: 15px;
                         background-color: white;
                         border: none;
                         margin: 0 5px;
                         color: #c0c0c0;
-                        @media only screen and (min-width: 768px) {
-                            font-size: 20px;
-                        }
                         &:hover {
                             cursor: pointer;
                         }
@@ -105,9 +82,6 @@
             p {
                 font-size: 15px;
             }
-            @media only screen and (min-width: 768px) {
-                margin-right: 17px;
-            }
         }
     }
 }
@@ -122,19 +96,11 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        @media only screen and (min-width: 768px) {
-            margin-top: 15px;
-        }
         #length-images {
             display: flex;
             width: 50%;
             column-gap: 2em;
             margin-left: 5px;
-            @media only screen and (min-width: 768px) {
-                width: 70%;
-                column-gap: 4em;
-                margin-left: 20px;
-            }
             p {
                 font-size: 13px;
             }
@@ -143,10 +109,6 @@
                 height: 55px;
                 background-size: cover;
                 margin-bottom: 5px;
-                @media only screen and (min-width: 768px) {
-                    width: 80px;
-                    height: 80px;
-                }
             }
             #sunrise-img {
                 background-image: url("./images/sunrise.png");
@@ -159,9 +121,6 @@
             font-size: 15px;
             width: 35%;
             line-height: 25px;
-            @media only screen and (min-width: 768px) {
-                width: 21%;
-            }
         }
     }
 }
