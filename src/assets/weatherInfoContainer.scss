@@ -20,6 +20,7 @@
         width: 85%;
         margin: 0 auto 2em auto;
         @media only screen and (min-width: 768px) {
+            flex-direction: row;
             flex-wrap: wrap;
             column-gap: 100px;
             margin: 5em auto;

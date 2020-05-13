@@ -43,6 +43,9 @@
     opacity: 0.8;
     background-image: url("./images/rain2.png");
     animation: rain 0.5s linear infinite;
+    @media only screen and (min-width: 768px) {
+        animation: rain2 0.5s linear infinite;
+    }
 }
 
 #clouds {
@@ -51,11 +54,14 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 70%;
+    height: 100%;
     background-size: contain;
     opacity: 0.6;
     animation: slide 50s linear infinite;
     z-index: 50;
+    @media only screen and (min-width: 768px) {
+        height: 70%;
+    }
 }
 
 .few-clouds {
@@ -112,6 +118,15 @@
 }
 
 @keyframes rain {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 15% 100%;
+    }
+}
+
+@keyframes rain2 {
     0% {
         background-position: 0% 0%;
     }
