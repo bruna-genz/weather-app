@@ -5,14 +5,12 @@ import loaderView from './views/loaderView';
 import forecastView from './views/forecastView';
 import dayLengthView from './views/dayLengthView';
 
-// Variables
-const state = { unit: 'metric' }; // unit, city name, description, coord, temp, feels like, wind speed, forecast
+const state = { unit: 'metric' };
 const key = 'c751dd140c912dd0b6a6f02af1f50ee9';
 const locationInput = document.querySelector('#location-input');
 const body = document.querySelector('body');
 const weatherContainer = document.querySelector('#weather-info-container');
 
-// Data formatting functions
 const formatDate = (timestamp) => {
   const datesDic = {
     Sun: 'Sunday',
@@ -48,13 +46,12 @@ const formatWindSpeed = (windSpeed) => {
 const formatDescription = (des) => des[0].toUpperCase() + des.slice(1);
 
 const calcDayLength = () => {
-  const difInMs = (state.day0.sunset[0].getTime() - state.day0.sunrise[0].getTime()); // dif in ms
+  const difInMs = (state.day0.sunset[0].getTime() - state.day0.sunrise[0].getTime());
   const hours = Math.floor(difInMs / (1000 * 60 * 60));
   const minutes = Math.round((difInMs % (1000 * 60 * 60)) / (1000 * 60));
   return `${hours}h ${minutes}min`;
 };
 
-// Sava date into state object
 const saveCurrentWeather = (weatherData) => {
   state.location = [weatherData.name, weatherData.sys.country];
   state.day0 = {
@@ -80,7 +77,6 @@ const saveForecast = (weatherData) => {
   }
 };
 
-// Helper functions
 const renderNightSky = () => {
   body.insertAdjacentHTML('afterbegin', "<div id='stars'></div>");
   body.insertAdjacentHTML('afterbegin', "<div id='twinkling'></div>");
@@ -109,26 +105,26 @@ const setBackground = () => {
 
   const c = state.day0.icon;
 
-  if (c === '01d') { // clear day
+  if (c === '01d') {
     renderSkyElement("<div id='sun'></div>");
-  } else if (c === '01n') { // clear night
+  } else if (c === '01n') {
     renderNightSky();
-  } else if (c === '02d' || c === '03d') { // cloudy day
+  } else if (c === '02d' || c === '03d') {
     renderSkyElement("<div id='clouds' class='few-clouds'></div>");
-  } else if (c === '02n' || c === '03n') { // cloudy night
+  } else if (c === '02n' || c === '03n') {
     renderSkyElement("<div id='clouds' class='few-clouds'></div>");
     renderNightSky();
-  } else if (c === '04d') { // very cloudy day
+  } else if (c === '04d') {
     renderSkyElement("<div id='clouds' class='many-clouds'></div>");
-  } else if (c === '04n') { // very cloudy night
+  } else if (c === '04n') {
     renderSkyElement("<div id='clouds' class='many-clouds'></div>", '#000');
-  } else if (c === '09d' || c === '10d' || c === '11d') { // rain day
+  } else if (c === '09d' || c === '10d' || c === '11d') {
     renderSkyElement("<div id='rain'></div>", '#d5d2d2');
-  } else if (c === '09n' || c === '10n' || c === '11n') { // rain night
+  } else if (c === '09n' || c === '10n' || c === '11n') {
     renderSkyElement("<div id='rain'></div>", '#393737');
-  } else if (c === '13d') { // snow day
+  } else if (c === '13d') {
     renderSkyElement("<div id='snow'></div>", '#d5d2d2');
-  } else if (c === '13n') { // snow night
+  } else if (c === '13n') {
     renderSkyElement("<div id='snow'></div>", '#393737');
   }
 };
@@ -142,13 +138,10 @@ const removeLoader = () => {
   weatherContainer.removeChild(loader);
 };
 
-// API calls
 // eslint-disable-next-line consistent-return
 const makeApiCall = async (location, unit) => {
   try {
-    // API call fot the current weather
     const resultCurrent = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${key}&units=${unit}`, { mode: 'cors' });
-    // API call for next 5 days forecas
     const resultForecast = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=${key}&units=${unit}`, { mode: 'cors' });
 
     if (resultCurrent.status === 200 && resultForecast.status === 200) {
@@ -165,7 +158,6 @@ const makeApiCall = async (location, unit) => {
   }
 };
 
-// Render views
 const toggleBtn = () => {
   if (state.unit === 'imperial') {
     const cBtn = document.querySelector('#c-button');
@@ -204,7 +196,6 @@ const renderWeatherInfo = () => {
   setBackground();
 };
 
-// Events
 const sleep = (milliseconds) => new Promise(resolve => setTimeout(resolve, milliseconds));
 
 const clearScreen = () => {
@@ -218,7 +209,7 @@ const getWeather = async () => {
   if (locationInput.value) {
     clearScreen();
     renderLoader();
-    await sleep(1000); // to simulate slower internet
+    await sleep(1000);
 
     const response = await makeApiCall(locationInput.value, state.unit);
 
