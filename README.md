@@ -27,7 +27,7 @@ The user can switch between metric and imperial units by clicking on desired uni
 
 ## Live Demo
 
-[Live Demo Link]()
+[Live Demo Link](https://weather-app-by-bruna.netlify.app/)
 
 ## Getting Started
 
