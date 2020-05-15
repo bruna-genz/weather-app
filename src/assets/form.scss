@@ -1,0 +1,46 @@
+#wrapper {
+    height: 135px;
+    min-width: 17em;
+    width: 75%;
+    z-index: 100;
+    position: absolute;
+    top: 35px;
+    left: 13%;
+    border: 1px solid #000;
+    background: rgba(255, 255, 255, 0.747);
+    #form-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        margin: 0 auto;
+        #title {
+            font-family: 'Gotu', sans-serif;
+            font-size: 20px;
+            margin: 20px 0 10px 0px;
+            color: #000;
+        }   
+        #location-form {
+            display: flex;
+            height: 35px;
+            width: 90%;
+            border: solid 1px  #737272;
+            margin: 10px auto;
+            #location-input {
+                width: 70%;
+                padding-left: 15px;
+                border: none;
+            }
+            #search-button {
+                width: 30%;
+                border: none;
+                background-color:  #3e3333;
+                color: white;
+                &:hover {
+                    cursor: pointer;
+                    background-color:  #797777
+                }
+            }
+        }
+    }
+}
