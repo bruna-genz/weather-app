@@ -1,0 +1,157 @@
+#weather-info-container {
+    height: 73%; 
+    background-image: url("./images/skyline.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50% 100%;
+    overflow: auto;
+    z-index: 90;
+    position: relative;
+    top: 27%;
+    #weather-info {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        row-gap: 10px;
+        justify-content: space-between;
+        width: 85%;
+        margin: 0 auto 2em auto;
+        .info-box {
+            border: solid 1px gray;
+            background-color: white;
+            padding: 12px;
+            z-index: 100;
+            img {
+                width: 65px;
+                height: 65px;
+            }
+        }
+    }
+}
+
+#current-weather {
+    #intro {
+        h2 {
+            margin-bottom: 5px;
+            font-size: 20px;
+            font-family: 'Gotu', sans-serif;
+        }
+        p {
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+    }
+    #main {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        #left {
+            display: flex;
+            align-items: center;
+            #temp {
+                display: flex;
+                padding-top: 6px;
+                font-size: 15px;
+                font-family: 'Gotu', sans-serif;
+                #units-container {
+                    font-size: 12px;
+                    margin: 5px 0 0 1px;
+                    button {
+                        font-size: 15px;
+                        background-color: white;
+                        border: none;
+                        margin: 0 5px;
+                        color: #c0c0c0;
+                        &:hover {
+                            cursor: pointer;
+                        }
+                    }
+                    .selected {
+                        color: black;
+                    }
+                }
+            }
+        }
+        #right {
+            margin-right: 5px;
+            line-height: 24px;
+            padding-top: 3px;
+            p {
+                font-size: 15px;
+            }
+        }
+    }
+}
+
+#day-length {
+    h4 {
+        font-family: 'Gotu', sans-serif;
+        font-size: 20px;
+    }
+    #length-info {
+        margin-top: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        #length-images {
+            display: flex;
+            width: 50%;
+            column-gap: 2em;
+            margin-left: 5px;
+            p {
+                font-size: 13px;
+            }
+            #sunrise-img, #sunset-img {
+                width: 55px;
+                height: 55px;
+                background-size: cover;
+                margin-bottom: 5px;
+            }
+            #sunrise-img {
+                background-image: url("./images/sunrise.png");
+            }
+            #sunset-img {
+                background-image: url("./images/sunset.png");
+            }
+        }
+        #lenght-paragraph {
+            font-size: 15px;
+            width: 35%;
+            line-height: 25px;
+        }
+    }
+}
+
+#next-days {
+    .forecast-day {
+        border-bottom: solid 1px gray;
+        padding: 5px 0 5px 0; 
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    &:first-child {
+        padding: 0 0 5px 0;
+    }
+    &:last-child {
+        border: none;
+        padding: 5px 0 0 0;
+    }
+        .left {
+            text-align: center;
+            width: 130px;
+            line-height: 25px;
+            h4, h5 {
+               font-weight: 400; 
+            }
+        }
+        .right {
+            display: flex;
+            align-items: center;
+            width: 130px;
+            img {
+                width: 80px;
+                height: 80px;
+            }
+        }
+    }
+}

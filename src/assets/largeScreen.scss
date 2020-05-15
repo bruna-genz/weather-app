@@ -1,0 +1,22 @@
+@media only screen and (min-width: 1024px) {
+    #wrapper {
+        width: 35em;
+        left: 23%;
+        #form-container {
+            #title {
+                font-size: 35px;
+            }
+        }
+    }
+
+    #weather-info-container {
+        #weather-info {
+            flex-direction: column;
+            flex-wrap: wrap;
+            column-gap: 75px;
+            margin: 4em auto;
+            max-height: 500px;
+            width: 90%;
+        }
+    }
+}

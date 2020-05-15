@@ -1,0 +1,22 @@
+@import "./loader.scss";
+@import "./backgrounds.scss";
+@import "./form.scss";
+@import "./weatherInfoContainer.scss";
+@import "./mediumScreen.scss";
+@import "./largeScreen.scss";
+@import "./extraLargeScreen.scss";
+@import url('https://fonts.googleapis.com/css2?family=Gotu&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    background-color: rgba(131, 205, 230, 0.897);
+}
